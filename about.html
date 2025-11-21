@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Despre Noi - Comandat.ro</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style type="text/tailwindcss">
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF9F6;
+        }
+        #page-overlay {
+            transition: opacity 0.33s ease-in-out;
+        }
+        #header-card {
+            transition: all 0.33s ease-in-out;
+        }
+        #products-menu {
+            @apply transition-all duration-300 ease-in-out;
+        }
+        .menu-closed {
+            @apply opacity-0 -translate-y-2 pointer-events-none;
+        }
+        .menu-open {
+            @apply opacity-100 translate-y-0 pointer-events-auto;
+        }
+        :root {
+            --green-custom: #16a34a;
+        }
+        .bg-green-custom {
+            background-color: var(--green-custom);
+        }
+        .cart-count {
+            @apply absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold;
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .stagger-animation {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    </style>
+</head>
+<body>
+    <div id="page-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-30 opacity-0"></div>
+
+    <header id="page-header" class="sticky top-0 z-40 p-2 transition-transform duration-300 ease-in-out">
+        <div class="container mx-auto px-3">
+            <div class="relative">
+                <div id="header-card" class="relative z-20 bg-white/70 backdrop-blur-sm rounded-xl shadow-lg flex flex-col">
+                    <div class="flex items-center justify-between px-6 py-3">
+                        <div class="flex items-center space-x-2 flex-shrink-0">
+                            <div class="bg-green-600 p-1.5 rounded-full flex items-center justify-center">
+                                <span class="material-icons text-white" style="font-size: 20px;">shopping_bag</span>
+                            </div>
+                            <a class="text-lg font-semibold text-gray-800 hidden lg:block" href="index.html">Comandat.ro</a>
+                        </div>
+                        <div class="flex-grow mx-6 hidden sm:block">
+                            <div class="relative">
+                                <input class="pl-10 pr-4 py-2 rounded-full bg-gray-100 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 w-full" placeholder="Caută produse..." type="text" />
+                                <span class="material-icons absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" style="font-size: 20px;">search</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 flex-shrink-0">
+                            <a href="account.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors">
+                                <img alt="User Avatar" class="w-8 h-8 rounded-full border-2 border-transparent group-hover:border-green-500" src="https://i.pravatar.cc/32?u=a042581f4e29026704d" onerror="this.onerror=null;this.src='https://placehold.co/32x32/E2E8F0/4A5568?text=U';" />
+                                <span class="hidden lg:block text-xs font-medium">Contul meu</span>
+                            </a>
+                            <a href="wishlist.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors">
+                                <span class="material-icons" style="font-size: 24px;">favorite_border</span>
+                                <span class="hidden lg:block text-xs font-medium">Favorite</span>
+                            </a>
+                            <a href="cart.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors relative">
+                                <span class="material-icons" style="font-size: 24px;">shopping_cart</span>
+                                <span class="hidden lg:block text-xs font-medium">Coșul meu</span>
+                                <span id="cart-count" class="cart-count hidden">0</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-200 px-6 py-2">
+                        <nav class="flex items-center space-x-2">
+                            <div id="products-menu-container">
+                                <button id="products-toggle-btn" class="flex items-center px-4 py-2 text-sm font-medium text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-full transition-all">
+                                    <span class="material-icons mr-2" style="font-size: 20px;">menu</span>
+                                    Produse
+                                </button>
+                            </div>
+                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="products.html">Oferte Speciale</a>
+                            <a class="px-4 py-2 text-sm font-medium text-green-600 bg-green-100 rounded-full" href="about.html">Despre Noi</a>
+                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="contact.html">Contact</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="products-menu" class="absolute w-max bg-white rounded-b-xl shadow-lg p-2 menu-closed z-10">
+        <nav class="flex flex-col">
+            <a href="products.html?category=laptops" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">laptop</span> Laptop, Tablete & Telefoane</a>
+            <a href="products.html?category=pc" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">desktop_windows</span> PC, Periferice & Software</a>
+            <a href="products.html?category=tv" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">tv</span> TV, Audio-Video & Foto</a>
+            <a href="products.html?category=home" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">kitchen</span> Electrocasnice & Climatizare</a>
+            <a href="products.html?category=gaming" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">sports_esports</span> Gaming, Cărți & Birotică</a>
+            <a href="products.html?category=fashion" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">checkroom</span> Fashion</a>
+            <a href="products.html?category=beauty" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">face</span> Îngrijire personală & Cosmetică</a>
+            <a href="products.html?category=sports" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">sports_soccer</span> Sport & Travel</a>
+        </nav>
+    </div>
+
+    <main class="container mx-auto px-3 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12 fade-in-up">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Despre Comandat.ro</h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Sursa ta de încredere pentru electronice recondiționate de calitate superioară</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
+                <div class="stagger-animation">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Povestea Noastră</h2>
+                    <p class="text-gray-600 mb-4">
+                        Comandat.ro s-a născut din pasiunea pentru tehnologie și dorința de a oferi produse de calitate la prețuri accesibile. Înființată în 2020, compania noastră a devenit rapid unul dintre cei mai importanți jucători pe piața de electronice recondiționate din România.
+                    </p>
+                    <p class="text-gray-600 mb-4">
+                        Credem că tehnologia de calitate nu trebuie să fie neapărat nouă pentru a fi performantă. Fiecare produs trece printr-un proces riguros de testare și recondiționare, asigurând că primești un dispozitiv care funcționează perfect.
+                    </p>
+                    <p class="text-gray-600">
+                        Misia noastră este să facem tehnologia accesibilă tuturor, fără compromisuri în ceea ce privește calitatea și fiabilitatea.
+                    </p>
+                </div>
+                <div class="stagger-animation">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a62d?w=800" alt="Despre Comandat.ro" class="rounded-lg shadow-lg w-full">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center stagger-animation">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="material-icons text-green-600 text-2xl">verified_user</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Calitate Garantată</h3>
+                    <p class="text-gray-600">Toate produsele sunt testate și certificate de tehnicieni specializați</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center stagger-animation">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="material-icons text-green-600 text-2xl">savings</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Prețuri Avantajoase</h3>
+                    <p class="text-gray-600">Economisiți până la 80% față de produsele noi, fără a compromite calitatea</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center stagger-animation">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="material-icons text-green-600 text-2xl">recycling</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Eco-Friendly</h3>
+                    <p class="text-gray-600">Contribuim la reducerea deșeurilor electronice și protejarea mediului</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-16">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Valorile Noastre</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Transparență</h3>
+                        <p class="text-gray-600 mb-4">Fiecare produs vine cu o descriere detaliată a stării și a procesului de recondiționare. Nu ascundem nimic și oferim informații complete despre istoricul fiecărui dispozitiv.</p>
+                        
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Satisfacția Clientului</h3>
+                        <p class="text-gray-600">Fiecare client este important pentru noi. Oferim suport profesionat și soluționăm rapid orice problemă apare. Satisfacția dvs. este prioritatea noastră.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Inovație Continuă</h3>
+                        <p class="text-gray-600 mb-4">Investim constant în tehnologii noi de testare și recondiționare pentru a oferi produse din ce în ce mai bune. Echipa noastră de tehnicieni este permanent pregătită.</p>
+                        
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Responsabilitate Socială</h3>
+                        <p class="text-gray-600">Prin recondiționarea și refolosirea produselor electronice, contribuim la economia circulară și reducem impactul asupra mediului înconjurător.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Alătură-te Comunității Noastre</h2>
+                <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Fii parte din mișcarea pentru o tehnologie mai accesibilă și mai sustenabilă. Alături de noi, poți avea produse de calitate la prețuri avantajoase.</p>
+                <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
+                    <a href="products.html" class="block w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                        Vezi Produsele
+                    </a>
+                    <a href="contact.html" class="block w-full sm:w-auto border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3 px-8 rounded-lg transition-colors">
+                        Contactează-ne
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 pt-10 pb-6 mt-12">
+        <div class="container mx-auto px-3">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6 text-sm">
+                <div>
+                    <h3 class="text-base font-semibold text-white mb-2">Comandat.ro</h3>
+                    <p>Sursa ta de încredere pentru electronice recondiționate.</p>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold text-white mb-2">Cumpărături</h3>
+                    <ul class="space-y-1.5">
+                        <li><a class="hover:text-green-400" href="products.html">Telefoane Mobile</a></li>
+                        <li><a class="hover:text-green-400" href="products.html">Laptopuri</a></li>
+                        <li><a class="hover:text-green-400" href="products.html">Tablete</a></li>
+                        <li><a class="hover:text-green-400" href="products.html">Accesorii</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold text-white mb-2">Suport</h3>
+                    <ul class="space-y-1.5">
+                        <li><a class="hover:text-green-400" href="contact.html">Contact</a></li>
+                        <li><a class="hover:text-green-400" href="#">Garanție</a></li>
+                        <li><a class="hover:text-green-400" href="#">Întrebări Frecvente</a></li>
+                        <li><a class="hover:text-green-400" href="#">Politica de Retur</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold text-white mb-2">Rămâi Conectat</h3>
+                    <form class="flex">
+                        <input class="w-full px-2 py-1.5 rounded-l-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm" placeholder="adresa@email.com" type="email" />
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-r-md font-semibold text-sm" type="submit">Abonare</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-4 text-center text-xs">
+                <p>© 2025 Comandat.ro. Toate drepturile rezervate.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const staggerElements = document.querySelectorAll('.stagger-animation');
+            
+            if (staggerElements.length > 0) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.style.opacity = '1';
+                                entry.target.style.transform = 'translateY(0)';
+                            }, index * 200);
+                        }
+                    });
+                });
+
+                staggerElements.forEach(el => {
+                    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                    observer.observe(el);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

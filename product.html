@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Detalii Produs - Comandat.ro</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style type="text/tailwindcss">
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF9F6;
+        }
+        #page-overlay {
+            transition: opacity 0.33s ease-in-out;
+        }
+        #header-card {
+            transition: all 0.33s ease-in-out;
+        }
+        #products-menu {
+            @apply transition-all duration-300 ease-in-out;
+        }
+        .menu-closed {
+            @apply opacity-0 -translate-y-2 pointer-events-none;
+        }
+        .menu-open {
+            @apply opacity-100 translate-y-0 pointer-events-auto;
+        }
+        :root {
+            --green-custom: #16a34a;
+        }
+        .bg-green-custom {
+            background-color: var(--green-custom);
+        }
+        .cart-count {
+            @apply absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold;
+        }
+        .chat-bubble-user { 
+            @apply bg-blue-500 text-white p-2 rounded-lg rounded-br-none self-end text-sm; 
+        }
+        .chat-bubble-ai { 
+            @apply bg-gray-200 text-gray-800 p-2 rounded-lg rounded-bl-none self-start text-sm; 
+        }
+        .ai-typing-indicator span {
+            @apply w-1.5 h-1.5 bg-gray-400 rounded-full inline-block;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .ai-typing-indicator span:nth-child(1) { 
+            animation-delay: -0.32s; 
+        }
+        .ai-typing-indicator span:nth-child(2) { 
+            animation-delay: -0.16s; 
+        }
+        @keyframes bounce { 
+            0%, 80%, 100% { 
+                transform: scale(0); 
+            } 
+            40% { 
+                transform: scale(1.0); 
+            } 
+        }
+        .condition-badge {
+            @apply px-2 py-1 text-xs font-semibold rounded-full;
+        }
+        .condition-ca-nou { 
+            @apply bg-green-100 text-green-800; 
+        }
+        .condition-foarte-bun { 
+            @apply bg-blue-100 text-blue-800; 
+        }
+        .condition-bun { 
+            @apply bg-yellow-100 text-yellow-800; 
+        }
+        .condition-resigilat { 
+            @apply bg-purple-100 text-purple-800; 
+        }
+        .recommendation-card {
+            @apply bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer;
+        }
+        .recommendation-card img {
+            @apply w-full h-32 object-cover;
+        }
+        .bundle-offer {
+            @apply bg-gradient-to-r from-rose-50 to-pink-50 border-l-4 border-rose-500 p-6 rounded-lg shadow-lg mb-6;
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="page-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-30 opacity-0"></div>
+
+    <header id="page-header" class="sticky top-0 z-40 p-2 transition-transform duration-300 ease-in-out">
+        <div class="container mx-auto px-3">
+            <div class="relative">
+                <div id="header-card" class="relative z-20 bg-white/70 backdrop-blur-sm rounded-xl shadow-lg flex flex-col">
+                    <div class="flex items-center justify-between px-6 py-3">
+                        <div class="flex items-center space-x-2 flex-shrink-0">
+                            <div class="bg-green-600 p-1.5 rounded-full flex items-center justify-center">
+                                <span class="material-icons text-white" style="font-size: 20px;">shopping_bag</span>
+                            </div>
+                            <a class="text-lg font-semibold text-gray-800 hidden lg:block" href="index.html">Comandat.ro</a>
+                        </div>
+                        <div class="flex-grow mx-6 hidden sm:block">
+                            <div class="relative">
+                                <input id="search-input" class="pl-10 pr-4 py-2 rounded-full bg-gray-100 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 w-full" placeholder="Caută produse..." type="text" />
+                                <span class="material-icons absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" style="font-size: 20px;">search</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 flex-shrink-0">
+                            <a href="account.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors">
+                                <img alt="User Avatar" class="w-8 h-8 rounded-full border-2 border-transparent group-hover:border-green-500" src="https://i.pravatar.cc/32?u=a042581f4e29026704d" onerror="this.onerror=null;this.src='https://placehold.co/32x32/E2E8F0/4A5568?text=U';" />
+                                <span class="hidden lg:block text-xs font-medium">Contul meu</span>
+                            </a>
+                            <a href="wishlist.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors">
+                                <span class="material-icons" style="font-size: 24px;">favorite_border</span>
+                                <span class="hidden lg:block text-xs font-medium">Favorite</span>
+                            </a>
+                            <a href="cart.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors relative">
+                                <span class="material-icons" style="font-size: 24px;">shopping_cart</span>
+                                <span class="hidden lg:block text-xs font-medium">Coșul meu</span>
+                                <span id="cart-count" class="cart-count hidden">0</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-200 px-6 py-2">
+                        <nav class="flex items-center space-x-2">
+                            <div id="products-menu-container">
+                                <button id="products-toggle-btn" class="flex items-center px-4 py-2 text-sm font-medium text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-full transition-all">
+                                    <span class="material-icons mr-2" style="font-size: 20px;">menu</span>
+                                    Produse
+                                </button>
+                            </div>
+                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="products.html">Oferte Speciale</a>
+                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="about.html">Despre Noi</a>
+                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="contact.html">Contact</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="products-menu" class="absolute w-max bg-white rounded-b-xl shadow-lg p-2 menu-closed z-10">
+        <nav class="flex flex-col">
+            <a href="products.html?category=laptops" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">laptop</span> Laptop, Tablete & Telefoane</a>
+            <a href="products.html?category=pc" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">desktop_windows</span> PC, Periferice & Software</a>
+            <a href="products.html?category=tv" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">tv</span> TV, Audio-Video & Foto</a>
+            <a href="products.html?category=home" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">kitchen</span> Electrocasnice & Climatizare</a>
+            <a href="products.html?category=gaming" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">sports_esports</span> Gaming, Cărți & Birotică</a>
+            <a href="products.html?category=fashion" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">checkroom</span> Fashion</a>
+            <a href="products.html?category=beauty" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">face</span> Îngrijire personală & Cosmetică</a>
+            <a href="products.html?category=sports" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-full"><span class="material-icons mr-2 text-gray-500">sports_soccer</span> Sport & Travel</a>
+        </nav>
+    </div>
+
+    <div class="container mx-auto px-3 py-6">
+        <div class="bg-white p-4 md:p-6 rounded-lg shadow-lg mb-6 fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                <div class="md:col-span-5">
+                    <div class="mb-4">
+                        <img id="product-image" alt="Imagine principală a produsului" class="w-full h-auto rounded-lg object-cover aspect-square" src="" />
+                    </div>
+                    <div id="image-thumbnails" class="grid grid-cols-4 gap-2">
+                    </div>
+                </div>
+                
+                <div class="md:col-span-7">
+                    <h1 id="product-title" class="text-2xl md:text-3xl font-semibold text-gray-800 mb-4"></h1>
+                    
+                    <div class="flex items-center mb-4">
+                        <span id="product-condition" class="condition-badge mr-3"></span>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <span class="material-icons mr-1 text-yellow-500">star</span>
+                            <span>4.5 (128 recenzii)</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <p id="product-original-price" class="text-lg text-gray-600 line-through"></p>
+                        <div class="flex items-baseline">
+                            <p id="product-price" class="text-3xl font-bold text-green-600"></p>
+                            <span id="discount-badge" class="ml-3 bg-red-100 text-red-800 text-sm font-semibold px-2 py-1 rounded"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <h2 class="text-base font-medium text-gray-800 mb-3">Alege Condiția:</h2>
+                        <div id="condition-buttons" class="grid grid-cols-3 gap-2">
+                            <button class="condition-btn border-2 border-gray-300 rounded-lg py-3 px-2 text-center hover:border-green-500 focus:outline-none transition-all text-sm" data-condition="Ca Nou" data-price="0">
+                                <span class="block font-medium text-gray-800">Ca Nou</span>
+                                <span class="text-xs text-gray-500">+€0.00</span>
+                            </button>
+                            <button class="condition-btn border-2 border-green-500 bg-green-50 rounded-lg py-3 px-2 text-center focus:outline-none transition-all text-sm" data-condition="Foarte Bun" data-price="0">
+                                <span class="block font-medium text-green-700">Foarte Bun</span>
+                                <span class="text-xs text-green-600">Selectat</span>
+                            </button>
+                            <button class="condition-btn border-2 border-gray-300 rounded-lg py-3 px-2 text-center hover:border-green-500 focus:outline-none transition-all text-sm" data-condition="Bun" data-price="-10">
+                                <span class="block font-medium text-gray-800">Bun</span>
+                                <span class="text-xs text-gray-500">-€10.00</span>
+                            </button>
+                        </div>
+                        <div id="condition-description" class="mt-2 text-sm text-gray-600">
+                            Mici semne de uzură, aproape invizibile, 100% funcțional.
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-3 mb-6">
+                        <button id="add-to-cart-btn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
+                            <span class="material-icons mr-2 align-middle">shopping_cart</span>
+                            Adaugă în Coș
+                        </button>
+                        <button id="add-to-wishlist-btn" class="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                            <span class="material-icons text-gray-600">favorite_border</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-6">
+                        <div class="flex items-center">
+                            <span class="material-icons mr-2 text-green-600">local_shipping</span>
+                            <div>
+                                <p class="font-medium">Livrare Rapidă</p>
+                                <p>1-2 zile lucrătoare</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="material-icons mr-2 text-green-600">verified_user</span>
+                            <div>
+                                <p class="font-medium">Garanție 1 An</p>
+                                <p>Produse testate</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="material-icons mr-2 text-green-600">autorenew</span>
+                            <div>
+                                <p class="font-medium">Retur 14 Zile</p>
+                                <p>Satisfacție garantată</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="material-icons mr-2 text-green-600">support_agent</span>
+                            <div>
+                                <p class="font-medium">Suport 24/7</p>
+                                <p>Asistență specializată</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="bundle-offer" class="bundle-offer hidden">
+            <div class="flex flex-col md:flex-row items-center md:space-x-4">
+                <div class="flex-shrink-0 mb-4 md:mb-0">
+                    <div class="flex items-center -space-x-3">
+                        <img id="bundle-main-product" alt="Produs Principal" class="w-16 h-16 rounded-full border-2 border-white object-cover shadow-md" src="" />
+                        <span class="material-icons text-rose-600 text-3xl mx-1.5">add_circle_outline</span>
+                        <img id="bundle-secondary-product" alt="Produs Asociat" class="w-16 h-16 rounded-full border-2 border-white object-cover shadow-md" src="" />
+                    </div>
+                </div>
+                <div class="flex-grow text-center md:text-left">
+                    <h3 class="text-lg font-medium text-rose-900 mb-1">Completează-ți achiziția cu <span id="bundle-product-name" class="italic"></span></h3>
+                    <p class="text-rose-700 text-sm mb-2">pentru doar <span id="bundle-price" class="font-semibold text-rose-800"></span></p>
+                    <div class="flex items-center justify-center md:justify-start mb-2">
+                        <span id="bundle-total-price" class="text-2xl font-semibold text-rose-700 mr-1.5"></span>
+                        <span id="bundle-original-price" class="text-rose-500 line-through text-base"></span>
+                    </div>
+                </div>
+                <div class="flex-shrink-0 w-full md:w-auto text-center">
+                    <button id="add-bundle-btn" class="w-full md:w-auto bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-150 ease-in-out flex items-center justify-center">
+                        <span class="material-icons mr-1.5" style="font-size: 18px;">add_shopping_cart</span>
+                        Adaugă Pachetul
+                    </button>
+                    <div class="mt-2 text-xs font-medium text-rose-700">
+                        <span class="material-icons text-xs align-middle mr-1">timer</span>
+                        Oferta expiră în: <span id="bundle-timer" class="font-semibold">02:45:30</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="lg:col-span-2">
+                <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Descriere Produs</h2>
+                    <p id="product-description" class="text-gray-600 leading-relaxed"></p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Specificații Tehnice</h2>
+                    <div id="product-specs" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Recenzii Clienti</h3>
+                    <div class="space-y-4">
+                        <div class="border-b border-gray-200 pb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400 mr-2">
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                </div>
+                                <span class="text-sm font-medium">Ion M.</span>
+                            </div>
+                            <p class="text-sm text-gray-600">"Produs excelent, exact ca descris. Livrare rapidă și ambalare profesională."</p>
+                        </div>
+                        <div class="border-b border-gray-200 pb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400 mr-2">
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star_border</span>
+                                </div>
+                                <span class="text-sm font-medium">Maria L.</span>
+                            </div>
+                            <p class="text-sm text-gray-600">"Foarte mulțumită de achiziție. Calitate superioară pentru prețul plătit."</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400 mr-2">
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                    <span class="material-icons text-sm">star</span>
+                                </div>
+                                <span class="text-sm font-medium">Alexandru P.</span>
+                            </div>
+                            <p class="text-sm text-gray-600">"Recomand cu încredere! Voi mai comanda cu siguranță."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Produse Similare</h3>
+                    <div id="similar-products" class="space-y-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Produse Recomandate</h2>
+            <div id="recommended-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            </div>
+        </section>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 pt-10 pb-6 mt-12">
+        <div class="container mx-auto px-3">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6 text-sm">
+                <div>
+                    <h3 class="text-base font-semibold text-white mb-2">Comandat.ro</h3>
+                    <p>Sursa ta de încredere pentru electronice recondiționate.</p>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold text-white mb-2">Cumpărături</h3>
+                    <ul class="space-y-1.5">
+                        <li><a class="hover:text-green-400" href="products.html">Telefoane Mobile</a></li>
+                        <li><a class="hover:text-green-400" href="products.html">Laptopuri</a></li>
+                        <li><a class="hover:text-green-400" href="products.html">Tablete</a></li>
+                        <li><a class="hover:text-green-400" href="products.html">Accesorii</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold text-white mb-2">Suport</h3>
+                    <ul class="space-y-1.5">
+                        <li><a class="hover:text-green-400" href="contact.html">Contact</a></li>
+                        <li><a class="hover:text-green-400" href="#">Garanție</a></li>
+                        <li><a class="hover:text-green-400" href="#">Întrebări Frecvente</a></li>
+                        <li><a class="hover:text-green-400" href="#">Politica de Retur</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold text-white mb-2">Rămâi Conectat</h3>
+                    <form class="flex">
+                        <input class="w-full px-2 py-1.5 rounded-l-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm" placeholder="adresa@email.com" type="email" />
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-r-md font-semibold text-sm" type="submit">Abonare</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-4 text-center text-xs">
+                <p>© 2025 Comandat.ro. Toate drepturile rezervate.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="fixed bottom-4 right-4 z-50">
+        <div id="ai-chat-window" class="hidden absolute bottom-16 right-0 w-72 sm:w-80 bg-white rounded-xl shadow-2xl flex flex-col transition-all">
+            <div class="flex justify-between items-center p-3 bg-gray-800 text-white rounded-t-xl">
+                <h3 class="font-semibold text-base flex items-center"><span class="material-icons mr-1.5" style="font-size: 20px;">support_agent</span>Asistent AI</h3>
+                <button id="ai-chat-close-btn" class="hover:bg-gray-700 p-1 rounded-full text-lg">×</button>
+            </div>
+            <div id="ai-chat-messages" class="flex-grow p-3 space-y-3 h-72 overflow-y-auto">
+                <div class="chat-bubble-ai max-w-xs">Bună! Cum te pot ajuta cu acest produs?</div>
+            </div>
+            <div class="p-3 border-t border-gray-200">
+                <div class="relative">
+                    <input id="ai-chat-input" type="text" placeholder="Scrie mesajul..." class="w-full pl-3 pr-10 py-1.5 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 text-sm">
+                    <button id="ai-chat-send-btn" class="absolute right-0.5 top-1/2 -translate-y-1/2 bg-green-600 hover:bg-green-700 text-white p-1.5 rounded-full">
+                        <span class="material-icons text-sm">send</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <button id="ai-chat-toggle" class="bg-green-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:bg-green-700 transition-transform hover:scale-110">
+            <span class="material-icons" style="font-size: 28px;">support_agent</span>
+        </button>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="product.js"></script>
+</body>
+</html>
