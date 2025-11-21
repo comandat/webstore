@@ -1,5 +1,107 @@
 <!DOCTYPE html>
 <html lang="ro">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Produse - Comandat.ro</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style type="text/tailwindcss">
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF9F6;
+        }
+        #page-overlay {
+            transition: opacity 0.33s ease-in-out;
+        }
+        #header-card {
+            transition: all 0.33s ease-in-out;
+        }
+        #products-menu {
+            @apply transition-all duration-300 ease-in-out;
+        }
+        .menu-closed {
+            @apply opacity-0 -translate-y-2 pointer-events-none;
+        }
+        .menu-open {
+            @apply opacity-100 translate-y-0 pointer-events-auto;
+        }
+        :root {
+            --green-custom: #16a34a;
+        }
+        .bg-green-custom {
+            background-color: var(--green-custom);
+        }
+        .cart-count {
+            @apply absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold;
+        }
+        .product-card {
+            @apply bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group;
+        }
+        .product-card img {
+            @apply w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105;
+        }
+        .filter-sidebar {
+            @apply bg-white rounded-lg shadow-lg p-6 sticky top-24;
+        }
+        .price-range-slider {
+            @apply relative h-2 bg-gray-200 rounded-full;
+        }
+        .price-range-fill {
+            @apply absolute h-2 bg-green-600 rounded-full;
+        }
+        .price-thumb {
+            @apply absolute w-4 h-4 bg-green-600 rounded-full cursor-pointer transform -translate-x-2 -translate-y-1 shadow-md;
+        }
+        .loading-spinner {
+            @apply animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600;
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .mobile-menu {
+            @apply fixed inset-0 z-50 bg-white transform translate-x-full transition-transform duration-300;
+        }
+        .mobile-menu.open {
+            @apply translate-x-0;
+        }
+        .products-dropdown {
+            @apply absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-lg border border-gray-200 z-40 opacity-0 invisible transition-all duration-300;
+        }
+        .products-dropdown.show {
+            @apply opacity-100 visible;
+        }
+        .filter-tag {
+            @apply inline-flex items-center px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium;
+        }
+        .filter-tag button {
+            @apply ml-2 text-green-600 hover:text-green-800;
+        }
+        .view-toggle {
+            @apply p-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors;
+        }
+        .view-toggle.active {
+            @apply bg-green-600 text-white border-green-600;
+        }
+<!DOCTYPE html>
+<html lang="ro">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -100,167 +202,11 @@
         }
     </style>
 </head>
+
 <body>
     <div id="page-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-30 opacity-0"></div>
 
-    <header id="page-header" class="sticky top-0 z-40 p-2 transition-transform duration-300 ease-in-out bg-white/90 backdrop-blur-sm shadow-sm">
-        <div class="container mx-auto px-3">
-            <div class="relative">
-                <div id="header-card" class="relative z-20 flex flex-col">
-                    <div class="flex items-center justify-between px-4 py-3">
-                        <div class="flex items-center space-x-3 flex-shrink-0">
-                            <div class="bg-green-600 p-2 rounded-full flex items-center justify-center">
-                                <span class="material-icons text-white" style="font-size: 24px;">shopping_bag</span>
-                            </div>
-                            <a class="text-xl font-bold text-gray-800 hidden lg:block" href="index.html">Comandat.ro</a>
-                        </div>
-                        
-                        <div class="flex-1 mx-4 hidden md:block">
-                            <div class="relative max-w-md mx-auto">
-                                <input id="search-input" class="w-full pl-12 pr-4 py-2.5 rounded-full bg-gray-100 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:bg-white" placeholder="Caută produse..." type="text" />
-                                <span class="material-icons absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" style="font-size: 20px;">search</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 flex-shrink-0">
-                            <a href="account.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors">
-                                <img alt="User Avatar" class="w-8 h-8 rounded-full border-2 border-transparent group-hover:border-green-500" src="https://i.pravatar.cc/32?u=a042581f4e29026704d" onerror="this.onerror=null;this.src='https://placehold.co/32x32/E2E8F0/4A5568?text=U';" />
-                                <span class="hidden lg:block text-sm font-medium">Contul meu</span>
-                            </a>
-                            <a href="wishlist.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors">
-                                <span class="material-icons" style="font-size: 24px;">favorite_border</span>
-                                <span class="hidden lg:block text-sm font-medium">Favorite</span>
-                            </a>
-                            <a href="cart.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors relative">
-                                <span class="material-icons" style="font-size: 24px;">shopping_cart</span>
-                                <span class="hidden lg:block text-sm font-medium">Coșul meu</span>
-                                <span id="cart-count" class="cart-count hidden">0</span>
-                            </a>
-                            <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-600 hover:text-green-600">
-                                <span class="material-icons">menu</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 px-4 py-2">
-                        <nav class="flex items-center space-x-4">
-                            <div class="relative" id="products-menu-container">
-                                <button id="products-toggle-btn" class="flex items-center px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-100 rounded-full transition-all">
-                                    <span class="material-icons mr-2" style="font-size: 20px;">menu</span>
-                                    Produse
-                                    <span class="material-icons ml-1 text-xs">expand_more</span>
-                                </button>
-                                <div id="products-menu" class="products-dropdown">
-                                    <div class="p-2">
-                                        <a href="products.html?category=laptops" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">laptop</span>
-                                            <div>
-                                                <span class="font-medium">Laptop, Tablete & Telefoane</span>
-                                                <p class="text-xs text-gray-500">Ultimele modele disponibile</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=pc" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">desktop_windows</span>
-                                            <div>
-                                                <span class="font-medium">PC, Periferice & Software</span>
-                                                <p class="text-xs text-gray-500">Echipamente performante</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=tv" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">tv</span>
-                                            <div>
-                                                <span class="font-medium">TV, Audio-Video & Foto</span>
-                                                <p class="text-xs text-gray-500">Divertisment de calitate</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=home" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">kitchen</span>
-                                            <div>
-                                                <span class="font-medium">Electrocasnice & Climatizare</span>
-                                                <p class="text-xs text-gray-500">Confort și eficiență</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=gaming" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">sports_esports</span>
-                                            <div>
-                                                <span class="font-medium">Gaming, Cărți & Birotică</span>
-                                                <p class="text-xs text-gray-500">Lumea jocurilor și educației</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=fashion" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">checkroom</span>
-                                            <div>
-                                                <span class="font-medium">Fashion</span>
-                                                <p class="text-xs text-gray-500">Stil și eleganță</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=beauty" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">face</span>
-                                            <div>
-                                                <span class="font-medium">Îngrijire personală & Cosmetică</span>
-                                                <p class="text-xs text-gray-500">Frumusețe și sănătate</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=sports" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">sports_soccer</span>
-                                            <div>
-                                                <span class="font-medium">Sport & Travel</span>
-                                                <p class="text-xs text-gray-500">Aventură și mișcare</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="products.html">Oferte Speciale</a>
-                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="about.html">Despre Noi</a>
-                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="contact.html">Contact</a>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div id="mobile-menu" class="mobile-menu lg:hidden">
-        <div class="flex items-center justify-between p-4 border-b border-gray-200">
-            <h2 class="text-lg font-semibold text-gray-800">Meniu</h2>
-            <button id="close-mobile-menu" class="p-2 text-gray-600">
-                <span class="material-icons">close</span>
-            </button>
-        </div>
-        <nav class="p-4 space-y-4">
-            <a href="index.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                <span class="material-icons">home</span>
-                <span>Acasă</span>
-            </a>
-            <a href="products.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                <span class="material-icons">shopping_bag</span>
-                <span>Produse</span>
-            </a>
-            <a href="about.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                <span class="material-icons">info</span>
-                <span>Despre Noi</span>
-            </a>
-            <a href="contact.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                <span class="material-icons">contact_mail</span>
-                <span>Contact</span>
-            </a>
-            <div class="border-t border-gray-200 pt-4">
-                <a href="account.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="material-icons">person</span>
-                    <span>Contul meu</span>
-                </a>
-                <a href="wishlist.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="material-icons">favorite</span>
-                    <span>Favorite</span>
-                </a>
-                <a href="cart.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="material-icons">shopping_cart</span>
-                    <span>Coșul meu</span>
-                </a>
-            </div>
-        </nav>
-    </div>
+    <div id="header-placeholder"></div>
 
     <div class="container mx-auto px-3 py-6">
         <div class="max-w-7xl mx-auto">
@@ -288,15 +234,17 @@
                     <div class="filter-sidebar">
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-xl font-semibold text-gray-800">Filtre</h2>
-                            <button id="clear-all-filters" class="text-sm text-green-600 hover:text-green-700 font-medium">
+                            <button id="clear-all-filters"
+                                class="text-sm text-green-600 hover:text-green-700 font-medium">
                                 Șterge tot
                             </button>
                         </div>
-                        
+
                         <div class="space-y-6">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Categorie</label>
-                                <select id="category-filter" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <select id="category-filter"
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                                     <option value="">Toate Categoriile</option>
                                     <option value="electronics">Electronice</option>
                                     <option value="laptops">Laptopuri</option>
@@ -310,7 +258,8 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Condiție</label>
-                                <select id="condition-filter" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <select id="condition-filter"
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                                     <option value="">Toate Condițiile</option>
                                     <option value="Ca Nou">Ca Nou</option>
                                     <option value="Foarte Bun">Foarte Bun</option>
@@ -323,7 +272,8 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Gamă de Preț</label>
                                 <div class="px-2">
                                     <div class="price-range-slider">
-                                        <div id="price-range-fill" class="price-range-fill" style="left: 0%; width: 100%;"></div>
+                                        <div id="price-range-fill" class="price-range-fill"
+                                            style="left: 0%; width: 100%;"></div>
                                         <div id="price-min" class="price-thumb" style="left: 0%;"></div>
                                         <div id="price-max" class="price-thumb" style="left: 100%;"></div>
                                     </div>
@@ -338,42 +288,58 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-3">Brand</label>
                                 <div class="space-y-2 max-h-48 overflow-y-auto">
                                     <label class="flex items-center">
-                                        <input type="checkbox" class="brand-filter rounded text-green-600 focus:ring-green-500" value="Apple">
+                                        <input type="checkbox"
+                                            class="brand-filter rounded text-green-600 focus:ring-green-500"
+                                            value="Apple">
                                         <span class="ml-2 text-sm text-gray-700">Apple</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox" class="brand-filter rounded text-green-600 focus:ring-green-500" value="Samsung">
+                                        <input type="checkbox"
+                                            class="brand-filter rounded text-green-600 focus:ring-green-500"
+                                            value="Samsung">
                                         <span class="ml-2 text-sm text-gray-700">Samsung</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox" class="brand-filter rounded text-green-600 focus:ring-green-500" value="Dell">
+                                        <input type="checkbox"
+                                            class="brand-filter rounded text-green-600 focus:ring-green-500"
+                                            value="Dell">
                                         <span class="ml-2 text-sm text-gray-700">Dell</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox" class="brand-filter rounded text-green-600 focus:ring-green-500" value="HP">
+                                        <input type="checkbox"
+                                            class="brand-filter rounded text-green-600 focus:ring-green-500" value="HP">
                                         <span class="ml-2 text-sm text-gray-700">HP</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox" class="brand-filter rounded text-green-600 focus:ring-green-500" value="Sony">
+                                        <input type="checkbox"
+                                            class="brand-filter rounded text-green-600 focus:ring-green-500"
+                                            value="Sony">
                                         <span class="ml-2 text-sm text-gray-700">Sony</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox" class="brand-filter rounded text-green-600 focus:ring-green-500" value="Canon">
+                                        <input type="checkbox"
+                                            class="brand-filter rounded text-green-600 focus:ring-green-500"
+                                            value="Canon">
                                         <span class="ml-2 text-sm text-gray-700">Canon</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox" class="brand-filter rounded text-green-600 focus:ring-green-500" value="Nike">
+                                        <input type="checkbox"
+                                            class="brand-filter rounded text-green-600 focus:ring-green-500"
+                                            value="Nike">
                                         <span class="ml-2 text-sm text-gray-700">Nike</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="checkbox" class="brand-filter rounded text-green-600 focus:ring-green-500" value="Adidas">
+                                        <input type="checkbox"
+                                            class="brand-filter rounded text-green-600 focus:ring-green-500"
+                                            value="Adidas">
                                         <span class="ml-2 text-sm text-gray-700">Adidas</span>
                                     </label>
                                 </div>
                             </div>
 
                             <div class="pt-4 border-t border-gray-200">
-                                <button id="apply-filters" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors">
+                                <button id="apply-filters"
+                                    class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors">
                                     Aplică Filtre
                                 </button>
                             </div>
@@ -384,10 +350,11 @@
                 <main class="lg:w-3/4">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                         <div>
-                            <h1 id="page-title" class="text-2xl md:text-3xl font-bold text-gray-800">Toate Produsele</h1>
+                            <h1 id="page-title" class="text-2xl md:text-3xl font-bold text-gray-800">Toate Produsele
+                            </h1>
                             <p id="results-count" class="text-gray-600 mt-1">Se încarcă produsele...</p>
                         </div>
-                        
+
                         <div class="flex items-center gap-4">
                             <div class="flex items-center gap-2">
                                 <span class="text-sm text-gray-600">Vizualizare:</span>
@@ -398,10 +365,11 @@
                                     <span class="material-icons text-sm">view_list</span>
                                 </button>
                             </div>
-                            
+
                             <div class="flex items-center gap-2">
                                 <span class="text-sm text-gray-600">Sortează:</span>
-                                <select id="sort-select" class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm">
+                                <select id="sort-select"
+                                    class="p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm">
                                     <option value="relevance">Relevanță</option>
                                     <option value="price_asc">Preț: Crescător</option>
                                     <option value="price_desc">Preț: Descrescător</option>
@@ -431,7 +399,8 @@
                         </div>
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Nu am găsit produse</h3>
                         <p class="text-gray-600 mb-6">Încercați să modificați filtrele sau termenii de căutare.</p>
-                        <button id="reset-filters" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                        <button id="reset-filters"
+                            class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
                             Resetează Filtrele
                         </button>
                     </div>
@@ -443,47 +412,12 @@
         </div>
     </div>
 
-    <footer class="bg-gray-800 text-gray-300 pt-12 pb-8 mt-16">
-        <div class="container mx-auto px-3">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Comandat.ro</h3>
-                    <p class="text-sm leading-relaxed">Sursa ta de încredere pentru electronice recondiționate. Oferim calitate superioară la prețuri accesibile, cu garanție completă.</p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Cumpărături</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a class="hover:text-green-400 transition-colors" href="products.html">Telefoane Mobile</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="products.html">Laptopuri</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="products.html">Tablete</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="products.html">Accesorii</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Suport</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a class="hover:text-green-400 transition-colors" href="contact.html">Contact</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="#">Garanție</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="#">Întrebări Frecvente</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="#">Politica de Retur</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Rămâi Conectat</h3>
-                    <p class="text-sm mb-4">Abonează-te pentru a primi oferte speciale și noutăți</p>
-                    <form class="flex">
-                        <input class="flex-1 px-3 py-2 rounded-l-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm" placeholder="adresa@email.com" type="email" />
-                        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-r-lg font-semibold text-sm transition-colors" type="submit">Abonare</button>
-                    </form>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 pt-6 text-center text-sm">
-                <p>© 2025 Comandat.ro. Toate drepturile rezervate. | Termeni și Condiții | Politica de Confidențialitate</p>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
+    <script src="components.js"></script>
     <script src="main.js"></script>
+    <script src="data.js"></script>
     <script src="products.js"></script>
 </body>
+
 </html>

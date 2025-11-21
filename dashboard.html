@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Contul Meu - Comandat.ro</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF9F6;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-btn.active {
+            border-bottom: 2px solid #16a34a;
+            color: #16a34a;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Contul Meu</h1>
+
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Sidebar Navigation -->
+            <aside class="w-full md:w-64 flex-shrink-0">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="p-6 border-b border-gray-200 text-center">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Profile"
+                            class="w-20 h-20 rounded-full mx-auto mb-3 border-2 border-green-500 p-1">
+                        <h3 class="font-semibold text-gray-800">Alexandru Popescu</h3>
+                        <p class="text-sm text-gray-500">alex.popescu@email.com</p>
+                    </div>
+                    <nav class="flex flex-col">
+                        <button
+                            class="tab-btn active flex items-center px-6 py-4 text-gray-600 hover:bg-gray-50 transition-colors text-left"
+                            data-tab="profile">
+                            <span class="material-icons mr-3">person</span>
+                            Date Personale
+                        </button>
+                        <button
+                            class="tab-btn flex items-center px-6 py-4 text-gray-600 hover:bg-gray-50 transition-colors text-left"
+                            data-tab="orders">
+                            <span class="material-icons mr-3">shopping_bag</span>
+                            Comenzile Mele
+                        </button>
+                        <button
+                            class="tab-btn flex items-center px-6 py-4 text-gray-600 hover:bg-gray-50 transition-colors text-left"
+                            data-tab="wishlist">
+                            <span class="material-icons mr-3">favorite</span>
+                            Favorite
+                        </button>
+                        <button
+                            class="flex items-center px-6 py-4 text-red-600 hover:bg-red-50 transition-colors text-left mt-auto border-t border-gray-100">
+                            <span class="material-icons mr-3">logout</span>
+                            Deconectare
+                        </button>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="flex-1">
+                <!-- Profile Tab -->
+                <div id="profile" class="tab-content active bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Date Personale</h2>
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Prenume</label>
+                                <input type="text" value="Alexandru"
+                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nume</label>
+                                <input type="text" value="Popescu"
+                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" value="alex.popescu@email.com"
+                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                                <input type="tel" value="0722 123 456"
+                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-gray-200">
+                            <button type="submit"
+                                class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
+                                Salvează Modificările
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Orders Tab -->
+                <div id="orders" class="tab-content bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Comenzile Mele</h2>
+                    <div class="space-y-4">
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="font-semibold text-gray-800">Comanda #4829</p>
+                                    <p class="text-sm text-gray-500">Plasată pe 20 Nov 2025</p>
+                                </div>
+                                <span
+                                    class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">Livrată</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=100" alt="Product"
+                                    class="w-16 h-16 object-cover rounded">
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800">Smartwatch Apple Series 7</p>
+                                    <p class="text-sm text-gray-600">1 x €199.99</p>
+                                </div>
+                                <p class="font-bold text-gray-800">€199.99</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wishlist Tab -->
+                <div id="wishlist" class="tab-content bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Produse Favorite</h2>
+                    <div id="wishlist-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Wishlist items will be loaded here via JS -->
+                        <p class="text-gray-500 col-span-full text-center py-8">Nu ai produse în lista de favorite.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="components.js"></script>
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Simple Tab Switching Logic
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'border-l-4', 'border-green-500', 'bg-green-50'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                const tabId = btn.dataset.tab;
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Load Wishlist (Mock functionality using data.js for demo)
+        const wishlistContainer = document.getElementById('wishlist-container');
+        if (window.productsData && window.productsData.length > 0) {
+            const wishlistItems = window.productsData.slice(0, 3); // Just show first 3 as mock wishlist
+
+            if (wishlistItems.length > 0) {
+                wishlistContainer.innerHTML = wishlistItems.map(product => `
+                    <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-800 mb-2 truncate">${product.name}</h3>
+                            <p class="text-green-600 font-bold mb-3">€${product.price}</p>
+                            <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded transition-colors text-sm" onclick="window.ecommerceApp.addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+                                Adaugă în Coș
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+    </script>
+</body>
+
+</html>

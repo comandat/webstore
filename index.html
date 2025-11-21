@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -133,177 +134,74 @@
         }
     </style>
 </head>
+
 <body>
-    <div id="page-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-30 opacity-0"></div>
+    <div id="page-overlay" class="fixed inset-0 bg-black/50 z-40 hidden opacity-0"></div>
 
-    <header id="page-header" class="sticky top-0 z-40 p-2 transition-transform duration-300 ease-in-out bg-white/90 backdrop-blur-sm shadow-sm">
-        <div class="container mx-auto px-3">
-            <div class="relative">
-                <div id="header-card" class="relative z-20 flex flex-col">
-                    <div class="flex items-center justify-between px-4 py-3">
-                        <div class="flex items-center space-x-3 flex-shrink-0">
-                            <div class="bg-green-600 p-2 rounded-full flex items-center justify-center">
-                                <span class="material-icons text-white" style="font-size: 24px;">shopping_bag</span>
-                            </div>
-                            <a class="text-xl font-bold text-gray-800 hidden lg:block" href="index.html">Comandat.ro</a>
-                        </div>
-                        
-                        <div class="flex-1 mx-4 hidden md:block">
-                            <div class="relative max-w-md mx-auto">
-                                <input id="search-input" class="w-full pl-12 pr-4 py-2.5 rounded-full bg-gray-100 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:bg-white" placeholder="Caută produse..." type="text" />
-                                <span class="material-icons absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" style="font-size: 20px;">search</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-2 flex-shrink-0">
-                            <a href="account.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors">
-                                <img alt="User Avatar" class="w-8 h-8 rounded-full border-2 border-transparent group-hover:border-green-500" src="https://i.pravatar.cc/32?u=a042581f4e29026704d" onerror="this.onerror=null;this.src='https://placehold.co/32x32/E2E8F0/4A5568?text=U';" />
-                                <span class="hidden lg:block text-sm font-medium">Contul meu</span>
-                            </a>
-                            <a href="wishlist.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors">
-                                <span class="material-icons" style="font-size: 24px;">favorite_border</span>
-                                <span class="hidden lg:block text-sm font-medium">Favorite</span>
-                            </a>
-                            <a href="cart.html" class="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors relative">
-                                <span class="material-icons" style="font-size: 24px;">shopping_cart</span>
-                                <span class="hidden lg:block text-sm font-medium">Coșul meu</span>
-                                <span id="cart-count" class="cart-count hidden">0</span>
-                            </a>
-                            <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-600 hover:text-green-600">
-                                <span class="material-icons">menu</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 px-4 py-2">
-                        <nav class="flex items-center space-x-4">
-                            <div class="relative" id="products-menu-container">
-                                <button id="products-toggle-btn" class="flex items-center px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-100 rounded-full transition-all">
-                                    <span class="material-icons mr-2" style="font-size: 20px;">menu</span>
-                                    Produse
-                                    <span class="material-icons ml-1 text-xs">expand_more</span>
-                                </button>
-                                <div id="products-menu" class="products-dropdown">
-                                    <div class="p-2">
-                                        <a href="products.html?category=laptops" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">laptop</span>
-                                            <div>
-                                                <span class="font-medium">Laptop, Tablete & Telefoane</span>
-                                                <p class="text-xs text-gray-500">Ultimele modele disponibile</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=pc" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">desktop_windows</span>
-                                            <div>
-                                                <span class="font-medium">PC, Periferice & Software</span>
-                                                <p class="text-xs text-gray-500">Echipamente performante</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=tv" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">tv</span>
-                                            <div>
-                                                <span class="font-medium">TV, Audio-Video & Foto</span>
-                                                <p class="text-xs text-gray-500">Divertisment de calitate</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=home" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">kitchen</span>
-                                            <div>
-                                                <span class="font-medium">Electrocasnice & Climatizare</span>
-                                                <p class="text-xs text-gray-500">Confort și eficiență</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=gaming" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">sports_esports</span>
-                                            <div>
-                                                <span class="font-medium">Gaming, Cărți & Birotică</span>
-                                                <p class="text-xs text-gray-500">Lumea jocurilor și educației</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=fashion" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">checkroom</span>
-                                            <div>
-                                                <span class="font-medium">Fashion</span>
-                                                <p class="text-xs text-gray-500">Stil și eleganță</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=beauty" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">face</span>
-                                            <div>
-                                                <span class="font-medium">Îngrijire personală & Cosmetică</span>
-                                                <p class="text-xs text-gray-500">Frumusețe și sănătate</p>
-                                            </div>
-                                        </a>
-                                        <a href="products.html?category=sports" class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                            <span class="material-icons mr-3 text-gray-500">sports_soccer</span>
-                                            <div>
-                                                <span class="font-medium">Sport & Travel</span>
-                                                <p class="text-xs text-gray-500">Aventură și mișcare</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="products.html">Oferte Speciale</a>
-                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="about.html">Despre Noi</a>
-                            <a class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-all" href="contact.html">Contact</a>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
 
-    <main class="container mx-auto px-3 py-6">
-        <section class="mb-8">
-            <div class="banner-container relative">
+    <main class="container mx-auto px-3 py-8 mt-24">
+        <section class="mb-12">
+            <div class="banner-container">
                 <div class="banner-slide active" data-slide="0">
-                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop" alt="Banner 1" class="w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop"
+                        alt="Banner 1" class="w-full h-full object-cover">
                     <div class="banner-content">
                         <div class="text-center text-white px-4">
                             <h1 class="text-4xl md:text-6xl font-bold mb-4">Electronice de Calitate</h1>
-                            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Descoperă produse recondiționate la prețuri incredibile, cu garanție și livrare rapidă</p>
+                            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Descoperă produse recondiționate la
+                                prețuri incredibile, cu garanție și livrare rapidă</p>
                             <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
-                                <a href="products.html" class="block sm:inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                                <a href="products.html"
+                                    class="block sm:inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
                                     Vezi Produsele
                                 </a>
-                                <a href="about.html" class="block sm:inline-block border-2 border-white hover:bg-white hover:text-gray-800 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                                <a href="about.html"
+                                    class="block sm:inline-block border-2 border-white hover:bg-white hover:text-gray-800 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
                                     Află Mai Multe
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="banner-slide" data-slide="1">
-                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop" alt="Banner 2" class="w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop"
+                        alt="Banner 2" class="w-full h-full object-cover">
                     <div class="banner-content">
                         <div class="text-center text-white px-4">
                             <h1 class="text-4xl md:text-6xl font-bold mb-4">Reduceri Speciale</h1>
-                            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Economisește până la 80% la produsele recondiționate verificate profesional</p>
+                            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Economisește până la 80% la produsele
+                                recondiționate verificate profesional</p>
                             <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
-                                <a href="products.html?sort=price_asc" class="block sm:inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                                <a href="products.html?sort=price_asc"
+                                    class="block sm:inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
                                     Vezi Ofertele
                                 </a>
-                                <a href="products.html" class="block sm:inline-block border-2 border-white hover:bg-white hover:text-gray-800 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                                <a href="products.html"
+                                    class="block sm:inline-block border-2 border-white hover:bg-white hover:text-gray-800 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
                                     Toate Produsele
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="banner-slide" data-slide="2">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop" alt="Banner 3" class="w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop"
+                        alt="Banner 3" class="w-full h-full object-cover">
                     <div class="banner-content">
                         <div class="text-center text-white px-4">
                             <h1 class="text-4xl md:text-6xl font-bold mb-4">Garanție 1 An</h1>
-                            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Cumpără cu încredere - toate produsele noastre beneficiază de garanție completă</p>
+                            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Cumpără cu încredere - toate produsele
+                                noastre beneficiază de garanție completă</p>
                             <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
-                                <a href="about.html" class="block sm:inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                                <a href="about.html"
+                                    class="block sm:inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
                                     Despre Noi
                                 </a>
-                                <a href="contact.html" class="block sm:inline-block border-2 border-white hover:bg-white hover:text-gray-800 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                                <a href="contact.html"
+                                    class="block sm:inline-block border-2 border-white hover:bg-white hover:text-gray-800 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
                                     Contact
                                 </a>
                             </div>
@@ -332,9 +230,10 @@
         <section class="mb-12">
             <div class="text-center mb-8 fade-in-up">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">Cele mai bune oferte</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Descoperă produsele noastre recondiționate la prețuri incredibile</p>
+                <p class="text-gray-600 max-w-2xl mx-auto">Descoperă produsele noastre recondiționate la prețuri
+                    incredibile</p>
             </div>
-            
+
             <div id="offers-carousel" class="relative">
                 <div id="offers-track" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 </div>
@@ -372,7 +271,7 @@
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">Categorii Populare</h2>
                 <p class="text-gray-600">Explorează cele mai căutate categorii de produse</p>
             </div>
-            
+
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <a href="products.html?category=electronics" class="category-card">
                     <span class="material-icons text-green-600 text-4xl mb-3">phone_iphone</span>
@@ -398,87 +297,11 @@
         </section>
     </main>
 
-    <footer class="bg-gray-800 text-gray-300 pt-12 pb-8 mt-16">
-        <div class="container mx-auto px-3">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Comandat.ro</h3>
-                    <p class="text-sm leading-relaxed">Sursa ta de încredere pentru electronice recondiționate. Oferim calitate superioară la prețuri accesibile, cu garanție completă.</p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Cumpărături</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a class="hover:text-green-400 transition-colors" href="products.html">Telefoane Mobile</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="products.html">Laptopuri</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="products.html">Tablete</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="products.html">Accesorii</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Suport</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a class="hover:text-green-400 transition-colors" href="contact.html">Contact</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="#">Garanție</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="#">Întrebări Frecvente</a></li>
-                        <li><a class="hover:text-green-400 transition-colors" href="#">Politica de Retur</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-white mb-4">Rămâi Conectat</h3>
-                    <p class="text-sm mb-4">Abonează-te pentru a primi oferte speciale și noutăți</p>
-                    <form class="flex">
-                        <input class="flex-1 px-3 py-2 rounded-l-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm" placeholder="adresa@email.com" type="email" />
-                        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-r-lg font-semibold text-sm transition-colors" type="submit">Abonare</button>
-                    </form>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 pt-6 text-center text-sm">
-                <p>© 2025 Comandat.ro. Toate drepturile rezervate. | Termeni și Condiții | Politica de Confidențialitate</p>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
-    <div id="mobile-menu" class="mobile-menu lg:hidden">
-        <div class="flex items-center justify-between p-4 border-b border-gray-200">
-            <h2 class="text-lg font-semibold text-gray-800">Meniu</h2>
-            <button id="close-mobile-menu" class="p-2 text-gray-600">
-                <span class="material-icons">close</span>
-            </button>
-        </div>
-        <nav class="p-4 space-y-4">
-            <a href="index.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                <span class="material-icons">home</span>
-                <span>Acasă</span>
-            </a>
-            <a href="products.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                <span class="material-icons">shopping_bag</span>
-                <span>Produse</span>
-            </a>
-            <a href="about.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                <span class="material-icons">info</span>
-                <span>Despre Noi</span>
-            </a>
-            <a href="contact.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                <span class="material-icons">contact_mail</span>
-                <span>Contact</span>
-            </a>
-            <div class="border-t border-gray-200 pt-4">
-                <a href="account.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="material-icons">person</span>
-                    <span>Contul meu</span>
-                </a>
-                <a href="wishlist.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="material-icons">favorite</span>
-                    <span>Favorite</span>
-                </a>
-                <a href="cart.html" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="material-icons">shopping_cart</span>
-                    <span>Coșul meu</span>
-                </a>
-            </div>
-        </nav>
-    </div>
-
+    <script src="data.js"></script>
+    <script src="components.js"></script>
     <script src="main.js"></script>
 </body>
+
 </html>
