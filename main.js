@@ -309,7 +309,7 @@ class EcommerceApp {
 
     createProductCard(product) {
         const card = document.createElement('div');
-        card.className = 'product-card';
+        card.className = 'product-card group';
         
         const discountPercent = product.originalPrice ? 
             Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;

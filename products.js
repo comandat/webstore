@@ -290,13 +290,13 @@ class ProductsPage {
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category');
         const search = urlParams.get('search');
-        
+
         if (category) {
             this.filters.category = category;
             document.getElementById('category-filter').value = category;
             this.updatePageTitle(category);
         }
-        
+
         if (search) {
             this.filters.search = search;
             document.getElementById('search-input').value = search;
@@ -379,26 +379,26 @@ class ProductsPage {
         const updatePriceRange = () => {
             const minPercent = parseFloat(priceMin.style.left) || 0;
             const maxPercent = parseFloat(priceMax.style.left) || 100;
-            
+
             const minPrice = Math.round((minPercent / 100) * 1500);
             const maxPrice = Math.round((maxPercent / 100) * 1500);
-            
+
             priceMinLabel.textContent = `€${minPrice}`;
             priceMaxLabel.textContent = `€${maxPrice}`;
-            
+
             priceRangeFill.style.left = `${minPercent}%`;
             priceRangeFill.style.width = `${maxPercent - minPercent}%`;
-            
+
             this.filters.priceMin = minPrice;
             this.filters.priceMax = maxPrice;
         };
 
         const handleMouseMove = (e) => {
             if (!isDragging || !currentThumb) return;
-            
+
             const rect = currentThumb.parentElement.getBoundingClientRect();
             const percent = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-            
+
             if (currentThumb === priceMin) {
                 const maxPercent = parseFloat(priceMax.style.left) || 100;
                 if (percent < maxPercent) {
@@ -410,7 +410,7 @@ class ProductsPage {
                     currentThumb.style.left = `${percent}%`;
                 }
             }
-            
+
             updatePriceRange();
         };
 
@@ -419,7 +419,7 @@ class ProductsPage {
             currentThumb = null;
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseup', handleMouseUp);
-            
+
             this.applyFilters();
             this.renderProducts();
         };
@@ -429,7 +429,7 @@ class ProductsPage {
                 isDragging = true;
                 currentThumb = thumb;
                 e.preventDefault();
-                
+
                 document.addEventListener('mousemove', handleMouseMove);
                 document.addEventListener('mouseup', handleMouseUp);
             });
@@ -468,7 +468,7 @@ class ProductsPage {
             const matchesCondition = !this.filters.condition || product.condition === this.filters.condition;
             const matchesPrice = product.price >= this.filters.priceMin && product.price <= this.filters.priceMax;
             const matchesBrands = this.filters.brands.length === 0 || this.filters.brands.includes(product.brand);
-            const matchesSearch = !this.filters.search || 
+            const matchesSearch = !this.filters.search ||
                 product.name.toLowerCase().includes(this.filters.search.toLowerCase()) ||
                 product.description.toLowerCase().includes(this.filters.search.toLowerCase()) ||
                 product.brand.toLowerCase().includes(this.filters.search.toLowerCase());
@@ -515,7 +515,7 @@ class ProductsPage {
 
         setTimeout(() => {
             loadingSpinner.classList.add('hidden');
-            
+
             if (this.filteredProducts.length === 0) {
                 noResults.classList.remove('hidden');
                 return;
@@ -543,7 +543,7 @@ class ProductsPage {
         const productsToShow = this.filteredProducts.slice(startIndex, endIndex);
 
         productsGrid.innerHTML = '';
-        
+
         productsToShow.forEach(product => {
             const productCard = this.createProductCard(product);
             productsGrid.appendChild(productCard);
@@ -557,7 +557,7 @@ class ProductsPage {
         const productsToShow = this.filteredProducts.slice(startIndex, endIndex);
 
         productsList.innerHTML = '';
-        
+
         productsToShow.forEach(product => {
             const productCard = this.createListProductCard(product);
             productsList.appendChild(productCard);
@@ -566,9 +566,9 @@ class ProductsPage {
 
     createProductCard(product) {
         const card = document.createElement('div');
-        card.className = 'product-card fade-in-up';
-        
-        const discountPercent = product.originalPrice ? 
+        card.className = 'product-card group fade-in-up';
+
+        const discountPercent = product.originalPrice ?
             Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
         card.innerHTML = `
@@ -616,8 +616,8 @@ class ProductsPage {
     createListProductCard(product) {
         const card = document.createElement('div');
         card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow cursor-pointer fade-in-up';
-        
-        const discountPercent = product.originalPrice ? 
+
+        const discountPercent = product.originalPrice ?
             Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
         card.innerHTML = `
@@ -671,11 +671,11 @@ class ProductsPage {
         for (let i = 0; i < fullStars; i++) {
             starsHTML += '<span class="material-icons text-sm">star</span>';
         }
-        
+
         if (hasHalfStar) {
             starsHTML += '<span class="material-icons text-sm">star_half</span>';
         }
-        
+
         const emptyStars = 5 - Math.ceil(rating);
         for (let i = 0; i < emptyStars; i++) {
             starsHTML += '<span class="material-icons text-sm text-gray-300">star</span>';
@@ -791,7 +791,7 @@ class ProductsPage {
     updateResultsCount() {
         const resultsCount = document.getElementById('results-count');
         const totalResults = this.filteredProducts.length;
-        
+
         if (totalResults === 0) {
             resultsCount.textContent = 'Nu s-au găsit produse';
         } else if (totalResults === 1) {
@@ -804,14 +804,14 @@ class ProductsPage {
     renderPagination() {
         const pagination = document.getElementById('pagination');
         const totalPages = Math.ceil(this.filteredProducts.length / this.productsPerPage);
-        
+
         if (totalPages <= 1) {
             pagination.innerHTML = '';
             return;
         }
 
         let paginationHTML = '';
-        
+
         if (this.currentPage > 1) {
             paginationHTML += `<button class="pagination-btn px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50" data-page="${this.currentPage - 1}">Anterior</button>`;
         }
@@ -869,7 +869,7 @@ class ProductsPage {
         document.getElementById('category-filter').value = '';
         document.getElementById('condition-filter').value = '';
         document.getElementById('search-input').value = '';
-        
+
         document.querySelectorAll('.brand-filter').forEach(filter => {
             filter.checked = false;
         });
@@ -889,7 +889,7 @@ class ProductsPage {
 
     initProductAnimations() {
         const productCards = document.querySelectorAll('.product-card, .fade-in-up');
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {

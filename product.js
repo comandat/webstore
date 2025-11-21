@@ -1,5 +1,18 @@
 class ProductPage {
     constructor() {
+        this.allProducts = window.productsData || [];
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+
+        this.currentProduct = this.allProducts.find(p => p.id === productId);
+
+        if (!this.currentProduct) {
+            window.location.href = 'products.html';
+            return;
+        }
+
+        document.getElementById('product-name').textContent = this.currentProduct.name;
+        document.getElementById('product-price').textContent = `€${this.currentProduct.price}`;
         document.getElementById('product-condition').textContent = this.currentProduct.condition;
         document.getElementById('product-condition').className = `condition-badge condition-${this.currentProduct.condition.toLowerCase().replace(' ', '-')}`;
         document.getElementById('product-description').textContent = this.currentProduct.description;
@@ -9,17 +22,26 @@ class ProductPage {
             const discountPercent = Math.round(((this.currentProduct.originalPrice - this.currentProduct.price) / this.currentProduct.originalPrice) * 100);
             document.getElementById('discount-badge').textContent = `-${discountPercent}%`;
         } else {
-            document.getElementById('product-original-price').style.display = 'none';
-            document.getElementById('discount-badge').style.display = 'none';
+            const originalPriceEl = document.getElementById('product-original-price');
+            const discountBadgeEl = document.getElementById('discount-badge');
+            if (originalPriceEl) originalPriceEl.style.display = 'none';
+            if (discountBadgeEl) discountBadgeEl.style.display = 'none';
         }
 
         const productImage = document.getElementById('product-image');
-        productImage.src = this.currentProduct.image;
-        productImage.alt = this.currentProduct.name;
+        if (productImage) {
+            productImage.src = this.currentProduct.image;
+            productImage.alt = this.currentProduct.name;
+        }
 
         this.renderThumbnails();
         this.renderSpecs();
-        this.updateBundleOffer();
+        this.initConditionSelector();
+        this.initBundleOffer();
+        this.loadRecommendations();
+        this.initAIChat();
+        this.initEventListeners();
+        this.initAnimations();
     }
 
     renderThumbnails() {
@@ -131,7 +153,7 @@ class ProductPage {
     }
 
     startBundleTimer() {
-        let timeLeft = 2 * 60 * 60 + 45 * 60 + 30; // 2:45:30 in seconds
+        let timeLeft = 2 * 60 * 60 + 45 * 60 + 30;
 
         this.bundleTimer = setInterval(() => {
             const hours = Math.floor(timeLeft / 3600);
@@ -228,7 +250,6 @@ class ProductPage {
         const closeChatBtn = document.getElementById('ai-chat-close-btn');
         const chatInput = document.getElementById('ai-chat-input');
         const sendChatBtn = document.getElementById('ai-chat-send-btn');
-        const chatMessages = document.getElementById('ai-chat-messages');
 
         chatToggleBtn.addEventListener('click', () => {
             chatWindow.classList.toggle('hidden');
@@ -294,15 +315,15 @@ class ProductPage {
 
         if (message.includes('preț') || message.includes('cost')) {
             return `Prețul produsului ${product.name} este €${product.price}. ${product.originalPrice ? `Redus de la €${product.originalPrice}` : ''}. Avem și oferte speciale pentru pachete!`;
-        } else if (message.includes('garanție') || message.includes('garanție')) {
+        } else if (message.includes('garanție') || message.includes('garantie')) {
             return `Toate produsele noastre beneficiază de garanție 1 an. Produsul ${product.name} este testat și verificat profesional.`;
         } else if (message.includes('livrare') || message.includes('transport')) {
             return 'Livrarea se face în 1-2 zile lucrătoare prin curier rapid. Costul transportului este €20 pentru livrare standard sau €10 pentru Easybox.';
         } else if (message.includes('retur') || message.includes('return')) {
             return 'Aveți drept de retur în 14 zile de la primirea produsului. Produsul trebuie să fie în aceeași stare ca la livrare.';
-        } else if (message.includes('stare') || message.includes('condiție')) {
+        } else if (message.includes('stare') || message.includes('condiție') || message.includes('conditie')) {
             return `Produsul este în condiție ${product.condition}. ${product.condition === 'Ca Nou' ? 'Fără urme de uzură' : product.condition === 'Foarte Bun' ? 'Cu mici semne aproape invizibile' : 'Cu semne vizibile dar funcțional complet'}.`;
-        } else if (message.includes('specificații') || message.includes('detalii')) {
+        } else if (message.includes('specificații') || message.includes('specificatii') || message.includes('detalii')) {
             const specs = Object.entries(product.specs).map(([key, value]) => `${key}: ${value}`).join(', ');
             return `Specificații ${product.name}: ${specs}. Pentru mai multe detalii, consultați secțiunea de specificații tehnice.`;
         } else {
@@ -382,29 +403,6 @@ class ProductPage {
             el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
             observer.observe(el);
         });
-    }
-
-    updateBundleOffer() {
-        const similarProducts = this.allProducts.filter(p =>
-            p.id !== this.currentProduct.id &&
-            (p.category === this.currentProduct.category || p.brand === this.currentProduct.brand)
-        ).slice(0, 3);
-
-        if (similarProducts.length > 0) {
-            const bundleProduct = similarProducts[0];
-            const bundlePrice = bundleProduct.price * 0.8;
-            const totalPrice = this.currentProduct.price + bundlePrice;
-            const originalTotal = this.currentProduct.price + bundleProduct.price;
-
-            document.getElementById('bundle-main-product').src = this.currentProduct.image;
-            document.getElementById('bundle-secondary-product').src = bundleProduct.image;
-            document.getElementById('bundle-product-name').textContent = bundleProduct.name;
-            document.getElementById('bundle-price').textContent = `€${bundlePrice.toFixed(2)}`;
-            document.getElementById('bundle-total-price').textContent = `€${totalPrice.toFixed(2)}`;
-            document.getElementById('bundle-original-price').textContent = `€${originalTotal.toFixed(2)}`;
-
-            document.getElementById('bundle-offer').classList.remove('hidden');
-        }
     }
 }
 
