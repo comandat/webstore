@@ -8,12 +8,10 @@ class Components {
             if (response.ok) {
                 const html = await response.text();
                 headerPlaceholder.innerHTML = html;
-
-                // Wait a short time for DOM to update
-                setTimeout(() => {
-                    this.initHeaderLogic();
-                }, 50);
+                this.initHeaderLogic();
             } else {
+                // Fallback if header.html doesn't exist (e.g. during development before extraction)
+                // Or we could construct it here. For now, let's assume we will extract it.
                 console.error('Header file not found');
             }
         } catch (error) {
@@ -36,27 +34,28 @@ class Components {
     }
 
     static initHeaderLogic() {
-        // Wait for ecommerceApp to be available
+        // Re-attach event listeners for mobile menu, search, etc.
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMobileMenuBtn = document.getElementById('close-mobile-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden');
+                // Add animation class if needed
+            });
+        }
+
+        if (closeMobileMenuBtn && mobileMenu) {
+            closeMobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        }
+
+        // Update cart count if EcommerceApp is available
         if (window.ecommerceApp) {
-            // Initialize the products dropdown menu
-            window.ecommerceApp.initMenu();
-
-            // Initialize search functionality
-            window.ecommerceApp.initSearch();
-
-            // Initialize mobile menu
-            window.ecommerceApp.initMobileMenu();
-
-            // Update cart and wishlist counts
             window.ecommerceApp.updateCartCount();
-            if (window.ecommerceApp.updateWishlistCount) {
-                window.ecommerceApp.updateWishlistCount();
-            }
-        } else {
-            // If ecommerceApp is not ready yet, try again after a short delay
-            setTimeout(() => {
-                this.initHeaderLogic();
-            }, 100);
+            window.ecommerceApp.updateWishlistCount();
         }
     }
 }

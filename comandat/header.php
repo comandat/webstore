@@ -69,7 +69,6 @@
                             </button>
                             <div id="products-menu" class="products-dropdown">
                                 <div class="p-2">
-                                    <!-- Static links for now, should be dynamic -->
                                     <a href="<?php echo home_url('/products?category=laptops'); ?>"
                                         class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
                                         <span class="material-icons mr-3 text-gray-500">laptop</span>
@@ -78,7 +77,62 @@
                                             <p class="text-xs text-gray-500">Ultimele modele disponibile</p>
                                         </div>
                                     </a>
-                                    <!-- Add other categories here -->
+                                    <a href="<?php echo home_url('/products?category=pc'); ?>"
+                                        class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <span class="material-icons mr-3 text-gray-500">desktop_windows</span>
+                                        <div>
+                                            <span class="font-medium">PC, Periferice & Software</span>
+                                            <p class="text-xs text-gray-500">Echipamente performante</p>
+                                        </div>
+                                    </a>
+                                    <a href="<?php echo home_url('/products?category=tv'); ?>"
+                                        class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <span class="material-icons mr-3 text-gray-500">tv</span>
+                                        <div>
+                                            <span class="font-medium">TV, Audio-Video & Foto</span>
+                                            <p class="text-xs text-gray-500">Divertisment de calitate</p>
+                                        </div>
+                                    </a>
+                                    <a href="<?php echo home_url('/products?category=home'); ?>"
+                                        class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <span class="material-icons mr-3 text-gray-500">kitchen</span>
+                                        <div>
+                                            <span class="font-medium">Electrocasnice & Climatizare</span>
+                                            <p class="text-xs text-gray-500">Confort și eficiență</p>
+                                        </div>
+                                    </a>
+                                    <a href="<?php echo home_url('/products?category=gaming'); ?>"
+                                        class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <span class="material-icons mr-3 text-gray-500">sports_esports</span>
+                                        <div>
+                                            <span class="font-medium">Gaming, Cărți & Birotică</span>
+                                            <p class="text-xs text-gray-500">Lumea jocurilor și educației</p>
+                                        </div>
+                                    </a>
+                                    <a href="<?php echo home_url('/products?category=fashion'); ?>"
+                                        class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <span class="material-icons mr-3 text-gray-500">checkroom</span>
+                                        <div>
+                                            <span class="font-medium">Fashion</span>
+                                            <p class="text-xs text-gray-500">Stil și eleganță</p>
+                                        </div>
+                                    </a>
+                                    <a href="<?php echo home_url('/products?category=beauty'); ?>"
+                                        class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <span class="material-icons mr-3 text-gray-500">face</span>
+                                        <div>
+                                            <span class="font-medium">Îngrijire personală & Cosmetică</span>
+                                            <p class="text-xs text-gray-500">Frumusețe și sănătate</p>
+                                        </div>
+                                    </a>
+                                    <a href="<?php echo home_url('/products?category=sports'); ?>"
+                                        class="flex items-center w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <span class="material-icons mr-3 text-gray-500">sports_soccer</span>
+                                        <div>
+                                            <span class="font-medium">Sport & Travel</span>
+                                            <p class="text-xs text-gray-500">Aventură și mișcare</p>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -111,6 +165,27 @@
             <span class="material-icons">shopping_bag</span>
             <span>Produse</span>
         </a>
-        <!-- Other mobile links -->
+        <a href="<?php echo home_url('/about'); ?>" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <span class="material-icons">info</span>
+            <span>Despre Noi</span>
+        </a>
+        <a href="<?php echo home_url('/contact'); ?>" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <span class="material-icons">contact_mail</span>
+            <span>Contact</span>
+        </a>
+        <div class="border-t border-gray-200 pt-4">
+            <a href="<?php echo home_url('/dashboard'); ?>" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                <span class="material-icons">person</span>
+                <span>Contul meu</span>
+            </a>
+            <a href="<?php echo home_url('/dashboard'); ?>" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                <span class="material-icons">favorite</span>
+                <span>Favorite</span>
+            </a>
+            <a href="<?php echo home_url('/cart'); ?>" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                <span class="material-icons">shopping_cart</span>
+                <span>Coșul meu</span>
+            </a>
+        </div>
     </nav>
 </div>
